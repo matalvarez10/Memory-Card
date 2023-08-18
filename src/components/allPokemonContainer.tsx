@@ -3,19 +3,19 @@ import PokemonCard from "./pokemonCard";
 const AllPokemonContainer: React.FC<AllPokemonProps> = ({
   handleCardClick,
   allPokemonData: pokemonData,
-  isTransitionActive
+  isTransitionActive,
+  isAnimationFinished,
 }) => {
-
-    function handleclick(e){
-        console.log(e.target);
-        console.log("holaa")
-        return false;
-       }   
-    
   return (
-    <section className="relative grid grid-cols-5 gap-9" onClick={handleclick} >
-      {pokemonData.map((pokemon) => (
-        <PokemonCard handleCardClick={handleCardClick} indiVidualPokemonData={pokemon} isTransitionActive={isTransitionActive}/>
+    <section className="m-auto flex flex-row gap-9 w-4/5 justify-between flex-wrap">
+      {pokemonData.map((pokemon,index) => (
+        <PokemonCard
+          handleCardClick={handleCardClick}
+          indiVidualPokemonData={pokemon}
+          isTransitionActive={isTransitionActive}
+          isAnimationFinished={isAnimationFinished}
+          key={index} 
+        />
       ))}
     </section>
   );

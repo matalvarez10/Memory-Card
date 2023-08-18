@@ -7,16 +7,16 @@ function App() {
   const [pokemonData, setPokemonData] = useState<IPokemonData[]>([]);
   const [counter, setCounter] = useState<number>(0);
   const [isTransitionActive, setTransitionActive] = useState(false);
+  const [isAnimationActive, setIsAnimationActive] = useState(false);
 
-console.log(isTransitionActive);
   useEffect(() => {
     const allPokemonPromises = [];
     for (let index = 0; index < 10; index++) {
-      let pkmnId = getRandomInt(600);
+      let pkmnId = getRandomInt();
       // geting 10 numbers that are not repeated
       if (pokemonData.length > 0) {
         while (pokemonData.some((element) => element.id == pkmnId)) {
-          pkmnId = getRandomInt(600);
+          pkmnId = getRandomInt();
         }
       }
       allPokemonPromises.push(fetchPokemon(pkmnId));
@@ -35,44 +35,48 @@ console.log(isTransitionActive);
   }, []);
 
   const handleCardClick = (isClicked: boolean, id: number) => {
+    setIsAnimationActive(true);
     setTransitionActive(!isTransitionActive);
     setTimeout(() => {
-        setTransitionActive(false);
-        setPokemonData((previousData) => [
-          ...previousData.sort(() => Math.random() - 0.5),
-        ]);
-        if (isClicked) {
-          setCounter(0);
-          setPokemonData((previousData) => {
-            return [
-              ...previousData.map((pokemon) =>
-                pokemon.id == id ? { ...pokemon, clicked: false } : pokemon
-              ),
-            ];
-          });
-        } else {
-          setCounter(counter + 1);
-          setPokemonData((previousData) => {
-            return [
-              ...previousData.map((pokemon) =>
-                pokemon.id == id ? { ...pokemon, clicked: true } : pokemon
-              ),
-            ];
-          });
-        }
-      }, 300);
-
+      setPokemonData((previousData) => [
+        ...previousData.sort(() => Math.random() - 0.5),
+      ]);
+      if (isClicked) {
+        setCounter(0);
+        setPokemonData((previousData) => {
+          return [
+            ...previousData.map((pokemon) =>
+              pokemon.id == id ? { ...pokemon, clicked: false } : pokemon
+            ),
+          ];
+        });
+      } else {
+        setCounter(counter + 1);
+        setPokemonData((previousData) => {
+          return [
+            ...previousData.map((pokemon) =>
+              pokemon.id == id ? { ...pokemon, clicked: true } : pokemon
+            ),
+          ];
+        });
+      }
+      setTransitionActive(false);
+      setTimeout(() => {
+        setIsAnimationActive(false);
+      }, 700); 
+    }, 700);
   };
 
   return (
-    <>
-      <p>{counter}</p>
-      <AllPokemonContainer
-        handleCardClick={handleCardClick}
-        allPokemonData={pokemonData}
-        isTransitionActive={isTransitionActive}
-      />
-    </>
+    <main className="h-screen">
+          <p>{counter}</p>
+          <AllPokemonContainer
+            handleCardClick={handleCardClick}
+            allPokemonData={pokemonData}
+            isTransitionActive={isTransitionActive}
+            isAnimationFinished={isAnimationActive}
+          />
+    </main>
   );
 }
 

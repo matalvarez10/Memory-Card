@@ -5,6 +5,6 @@ export async function fetchPokemon(id:number) {
   return data.json();
 }
 
-export function getRandomInt(max:number) {
-    return Math.floor(Math.random() * max) + 1;
+export function getRandomInt() {
+    return Math.floor(Math.random() * 800) + 1;
   }
