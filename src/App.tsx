@@ -5,8 +5,11 @@ import pokemonWallpaper from "./assets/pkmn-background.jpg";
 import AllPokemonContainer from "./components/allPokemonContainer";
 import HeaderComponent from "./components/headerComponent";
 import ScoreBoard from "./components/scoreBoard";
+import GameOverComponent from "./components/gameOver";
 
 const backgroundImg = pokemonWallpaper;
+const numberCards = 8;
+let modalText = "";
 function App() {
   const [pokemonData, setPokemonData] = useState<IPokemonData[]>([]);
   const [counter, setCounter] = useState<number>(0);
@@ -14,9 +17,16 @@ function App() {
   const [isAnimationActive, setIsAnimationActive] = useState(false);
   const [modalActive, setModalActive] = useState(false);
 
+  useEffect(()=>{
+    if (counter === numberCards) {
+      modalText = "You WON!!"
+      setModalActive(true);
+    }
+  },[counter])
+
   useEffect(() => {
     const allPokemonPromises = [];
-    for (let index = 0; index < 8; index++) {
+    for (let index = 0; index < numberCards; index++) {
       let pkmnId = getRandomInt();
       // geting 10 numbers that are not repeated
       if (pokemonData.length > 0) {
@@ -42,10 +52,15 @@ function App() {
   const handleCardClick = (isClicked: boolean, id: number) => {
     setIsAnimationActive(true);
     setTransitionActive(!isTransitionActive);
+    if(isClicked){
+      modalText = "Game Over!"
+      setModalActive(true);
+    }
     setTimeout(() => {
       setPokemonData((previousData) => [
         ...previousData.sort(() => Math.random() - 0.5),
       ]);
+      setCounter(counter + 1);
       if (isClicked) {
         setCounter(0);
         setPokemonData((previousData) => {
@@ -54,7 +69,6 @@ function App() {
           ];
         });
       } else {
-        setCounter(counter + 1);
         setPokemonData((previousData) => {
           return [
             ...previousData.map((pokemon) =>
@@ -70,6 +84,10 @@ function App() {
     }, 700);
   };
 
+  const handleModalClick = () =>{
+    location.reload();
+  }
+
   return (
     <main
       className="h-screen w-full bg-cover bg-no-repeat bg-center relative"
@@ -77,11 +95,11 @@ function App() {
     >
       <div
         className={
-          "text-white text-6xl border h-full w-full border-white absolute z-50 flex justify-center items-center bg-opacity-50 bg-black " +
+            "h-full w-full absolute z-50 flex justify-center items-center bg-opacity-50 bg-black " +
           `${modalActive ? "" : "invisible"}`
         }
       >
-        <p>MODAL AQUI</p>
+      <GameOverComponent handleModalClick={handleModalClick} modalText={modalText} score={counter}/>
       </div>
       <HeaderComponent />
       <ScoreBoard score={counter} maxScore={8} />

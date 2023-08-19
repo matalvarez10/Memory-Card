@@ -5,7 +5,7 @@ interface ScoreBoardProps {
 
 const ScoreBoard: React.FC<ScoreBoardProps> = ({ score, maxScore }) => {
   return (
-    <section className="flex flex-row gap-3 justify-center">
+    <section className="flex flex-row gap-3 justify-center my-3">
       <div className="scoreboard-style">
         Current Score: {score}
       </div>
