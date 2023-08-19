@@ -8,6 +8,7 @@ module.exports = {
       fontFamily: {
         /* raleway: ['Raleway', 'sans'],
         lato: ['Lato','sans'], */
+        pixel: ['PixelFont', 'sans'],
     },
     },
   },
