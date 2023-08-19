@@ -8,7 +8,7 @@ import ScoreBoard from "./components/scoreBoard";
 import GameOverComponent from "./components/gameOver";
 
 const backgroundImg = pokemonWallpaper;
-const numberCards = 8;
+const numberCards = 10;
 let modalText = "";
 function App() {
   const [pokemonData, setPokemonData] = useState<IPokemonData[]>([]);
@@ -41,7 +41,7 @@ function App() {
         return {
           id: pokemon.id,
           imgUrl: pokemon.sprites.other["official-artwork"].front_default,
-          name: pokemon.name,
+          name: pokemon.name.replace("-"," "),
           clicked: false,
         };
       });
@@ -55,20 +55,21 @@ function App() {
     if(isClicked){
       modalText = "Game Over!"
       setModalActive(true);
+      return
     }
     setTimeout(() => {
       setPokemonData((previousData) => [
         ...previousData.sort(() => Math.random() - 0.5),
       ]);
       setCounter(counter + 1);
-      if (isClicked) {
+/*       if (isClicked) {
         setCounter(0);
         setPokemonData((previousData) => {
           return [
             ...previousData.map((pokemon) => ({ ...pokemon, clicked: false })),
           ];
         });
-      } else {
+      } else { */
         setPokemonData((previousData) => {
           return [
             ...previousData.map((pokemon) =>
@@ -76,7 +77,7 @@ function App() {
             ),
           ];
         });
-      }
+     /*  } */
       setTransitionActive(false);
       setTimeout(() => {
         setIsAnimationActive(false);
@@ -90,7 +91,7 @@ function App() {
 
   return (
     <main
-      className="h-screen w-full bg-cover bg-no-repeat bg-center relative"
+      className="h-screen w-full bg-cover bg-no-repeat bg-center bg-fixed max-w-[100vw] overflow-y-auto-auto overflow-x-hidden "
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
       <div
@@ -103,6 +104,7 @@ function App() {
       </div>
       <HeaderComponent />
       <ScoreBoard score={counter} maxScore={8} />
+      <p className="font-pixel text-xl text-white text-center font-bold px-5">Dont click the same card Twice to Win!</p>
       <AllPokemonContainer
         handleCardClick={handleCardClick}
         allPokemonData={pokemonData}

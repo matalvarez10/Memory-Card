@@ -12,7 +12,7 @@
 
   @layer components {
     .scoreboard-style {
-      @apply flex justify-center items-center bg-black backdrop-blur-sm bg-opacity-30 px-16 rounded-md py-3 text-white font-pixel text-xl;
+      @apply flex justify-center items-center bg-black backdrop-blur-sm bg-opacity-30 px-16 rounded-md py-3 text-white font-pixel text-xl w-[350px];
     }
 
   }

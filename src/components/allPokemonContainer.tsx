@@ -7,7 +7,7 @@ const AllPokemonContainer: React.FC<AllPokemonProps> = ({
   isAnimationFinished,
 }) => {
   return (
-    <section className="mx-auto my-5 grid grid-cols-4  w-3/5 gap-4 gap-x-0 justify-items-center">
+    <section className="p-2 overflow-auto mx-auto my-5 grid gap-y-4 gap-x-0 justify-items-center w-[100%] grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 2xl:w-[70%] 2xl:grid-cols-5 ">
       {pokemonData.map((pokemon,index) => (
         <PokemonCard
           handleCardClick={handleCardClick}
