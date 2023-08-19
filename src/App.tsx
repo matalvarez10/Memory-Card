@@ -6,17 +6,21 @@ import AllPokemonContainer from "./components/allPokemonContainer";
 import HeaderComponent from "./components/headerComponent";
 import ScoreBoard from "./components/scoreBoard";
 import GameOverComponent from "./components/gameOver";
-
+/* localStorage.setItem("localMaxScore", String(0)); */
+// utility constants
 const backgroundImg = pokemonWallpaper;
 const numberCards = 10;
+const initialLocalMaxScore = Number(localStorage.getItem("localMaxScore"));
 let modalText = "";
 function App() {
   const [pokemonData, setPokemonData] = useState<IPokemonData[]>([]);
   const [counter, setCounter] = useState<number>(0);
+  const [localMaxScore,setLocalMaxScore] = useState<number>(initialLocalMaxScore)
   const [isTransitionActive, setTransitionActive] = useState(false);
   const [isAnimationActive, setIsAnimationActive] = useState(false);
-  const [modalActive, setModalActive] = useState(false);
+  const [modalActive, setModalActive] = useState(false); 
 
+  console.log("max score: ", localMaxScore)
   useEffect(()=>{
     if (counter === numberCards) {
       modalText = "You WON!!"
@@ -49,6 +53,13 @@ function App() {
     });
   }, []);
 
+  useEffect(()=>{
+    if(counter > localMaxScore){
+      localStorage.setItem("localMaxScore", String(counter));
+      setLocalMaxScore(counter);
+    }
+  },[counter])
+
   const handleCardClick = (isClicked: boolean, id: number) => {
     setIsAnimationActive(true);
     setTransitionActive(!isTransitionActive);
@@ -61,6 +72,7 @@ function App() {
       setPokemonData((previousData) => [
         ...previousData.sort(() => Math.random() - 0.5),
       ]);
+      
       setCounter(counter + 1);
 /*       if (isClicked) {
         setCounter(0);
@@ -103,7 +115,7 @@ function App() {
       <GameOverComponent handleModalClick={handleModalClick} modalText={modalText} score={counter}/>
       </div>
       <HeaderComponent />
-      <ScoreBoard score={counter} maxScore={8} />
+      <ScoreBoard score={counter} maxScore={localMaxScore} />
       <p className="font-pixel text-xl text-white text-center font-bold px-5">Dont click the same card Twice to Win!</p>
       <AllPokemonContainer
         handleCardClick={handleCardClick}
