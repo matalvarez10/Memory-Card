@@ -24,7 +24,6 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     if (counter === numberCards) {
       modalText = "You WON!!";
       setModalActive(true);
@@ -32,6 +31,7 @@ function App() {
   }, [counter]);
 
   useEffect(() => {
+    setLoading(true);
     const allPokemonPromises = [];
     for (let index = 0; index < numberCards; index++) {
       let pkmnId = getRandomInt();
