@@ -1,5 +1,9 @@
 # Memory Card Game - Pokémon Edition
 
+![Page Preview](memorycard-preview.png)
+
+[Live Preview of the Project](https://matalvarez10.github.io/Memory-Card/)
+
 ## Overview
 
 The Memory Card Game - Pokémon Edition is an engaging web-based game built using React, TypeScript, and styled with Tailwind CSS. In this game, players are presented with a grid of Pokémon cards, and their objective is to uncover all the cards without clicking the same card twice during a set number of turns. After each turn, the cards are shuffled and repositioned, challenging players to exercise their memory and strategy skills while enjoying a Pokémon-themed experience.
