@@ -2,7 +2,9 @@
 
 ![Page Preview](memorycard-preview.png)
 
-[Live Preview of the Project](https://matalvarez10.github.io/Memory-Card/)
+<div align="center">
+  <a href="https://matalvarez10.github.io/Memory-Card/" style="font-size: 32px;">Live Preview of the Project</a>
+</div>
 
 ## Overview
 
